@@ -131,10 +131,22 @@ document.addEventListener('click', (e) => {
         let i;
         for(i = 0; i < tarefasRecuperadas.length; i++) {
             if(tarefasRecuperadas[i] === todoTitle) {
-                let newList = tarefasRecuperadas.filter(item => item !== tarefasRecuperadas[i])
+
+               /*  let newList = tarefasRecuperadas.filter(item => item !== tarefasRecuperadas[i])
                 localStorage.setItem('tarefas', JSON.stringify(newList))
-                tarefasRecuperadas = newList
-                console.log(newList)
+                tarefasRecuperadas = newList */
+
+                let index = tarefasRecuperadas.indexOf(tarefasRecuperadas[i]);
+                
+                console.log(index)
+
+                    tarefasRecuperadas.splice(index, 1)
+                    
+                    localStorage.setItem('tarefas', JSON.stringify(tarefasRecuperadas))
+                
+
+
+                console.log(tarefasRecuperadas)
             }
         }
     }
