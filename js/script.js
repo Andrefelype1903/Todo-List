@@ -10,7 +10,21 @@ const cancelEditBtn = document.querySelector('#cancel-edit-btn');
 let oldInputValue;
 
 
+let tarefasRecuperadas = JSON.parse(localStorage.getItem('tarefas'))
+console.log(tarefasRecuperadas)
+
+
 /* Funções */
+
+const iniciaComTarefas = () => {
+    if(tarefasRecuperadas != null) {
+        let i
+        for(i = 0; i < tarefasRecuperadas.length; i++) {
+            saveTodo(tarefasRecuperadas[i])
+
+        }
+    }
+}
 
 const saveTodo = (text) => {
     const todo = document.createElement("div");
@@ -41,6 +55,8 @@ const saveTodo = (text) => {
 
 }
 
+iniciaComTarefas()
+
 const toggleForms = () => {
     editForm.classList.toggle('hide');
     todoForm.classList.toggle('hide');
@@ -59,19 +75,29 @@ const updateTodo = (text) => {
             todoTitle.innerText = text
         }
     })
-
-
-
-
-
 }
 
 
 
+const saveLocalStorage = (e) => {
+    let arrayTarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
 
+    arrayTarefas.push(e);
+
+    localStorage.setItem('tarefas', JSON.stringify(arrayTarefas))
+}
+
+const removetarefaLocalStorage = () => {
+
+    let newList = tarefasRecuperadas.filter(item => item !== tarefasRecuperadas[i])
+        
+    localStorage.setItem('tarefas', JSON.stringify(newList))
+    
+}
 
 
 /* Eventos */
+
 
 todoForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -80,6 +106,7 @@ todoForm.addEventListener('submit', (e) => {
 
     if(inputValue) {
         saveTodo(inputValue)
+        saveLocalStorage(inputValue)
     }
 })
 
@@ -99,7 +126,17 @@ document.addEventListener('click', (e) => {
     }
 
     if(targetEl.classList.contains("remove-todo")) {
-        parentEl.remove()
+        parentEl.remove();
+
+        let i;
+        for(i = 0; i < tarefasRecuperadas.length; i++) {
+            if(tarefasRecuperadas[i] === todoTitle) {
+                let newList = tarefasRecuperadas.filter(item => item !== tarefasRecuperadas[i])
+                localStorage.setItem('tarefas', JSON.stringify(newList))
+                tarefasRecuperadas = newList
+                console.log(newList)
+            }
+        }
     }
 
     if(targetEl.classList.contains("edit-todo")) {
