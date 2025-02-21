@@ -46,7 +46,7 @@ const saveTodo = (text) => {
     
     const deleteBtn = document.createElement("button");
     deleteBtn.classList.add("remove-todo");
-    deleteBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+    deleteBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
     todo.appendChild(deleteBtn);
 
     todoList.appendChild(todo);
@@ -85,6 +85,8 @@ const saveLocalStorage = (e) => {
     arrayTarefas.push(e);
 
     localStorage.setItem('tarefas', JSON.stringify(arrayTarefas))
+
+    location.reload()
 }
 
 const removetarefaLocalStorage = () => {
@@ -92,6 +94,8 @@ const removetarefaLocalStorage = () => {
     let newList = tarefasRecuperadas.filter(item => item !== tarefasRecuperadas[i])
         
     localStorage.setItem('tarefas', JSON.stringify(newList))
+
+    Location.reload()
     
 }
 
@@ -106,7 +110,7 @@ todoForm.addEventListener('submit', (e) => {
 
     if(inputValue) {
         saveTodo(inputValue)
-        saveLocalStorage(inputValue)
+        saveLocalStorage(inputValue.trim())
     }
 })
 
@@ -142,11 +146,10 @@ document.addEventListener('click', (e) => {
 
                     tarefasRecuperadas.splice(index, 1)
                     
-                    localStorage.setItem('tarefas', JSON.stringify(tarefasRecuperadas))
-                
+                    localStorage.setItem('tarefas', JSON.stringify(tarefasRecuperadas));
 
-
-                console.log(tarefasRecuperadas)
+                    Location.reload()
+            
             }
         }
     }
