@@ -1,6 +1,6 @@
 {
     "name": "Lista de tarefas",
-    "short_name": "Jogo da velha",
+    "short_name": "To do list",
     "icons": [
         {
             "src": "../imagens/todo-list.png",
@@ -13,3 +13,4 @@
     "theme_color": "#ffffff",
     "backgroud_color": "#ffffff"
 
+}

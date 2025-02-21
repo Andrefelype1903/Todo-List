@@ -89,16 +89,6 @@ const saveLocalStorage = (e) => {
     location.reload()
 }
 
-const removetarefaLocalStorage = () => {
-
-    let newList = tarefasRecuperadas.filter(item => item !== tarefasRecuperadas[i])
-        
-    localStorage.setItem('tarefas', JSON.stringify(newList))
-
-    Location.reload()
-    
-}
-
 
 /* Eventos */
 
@@ -126,7 +116,12 @@ document.addEventListener('click', (e) => {
 
 
     if(targetEl.classList.contains("finish-todo")) {
-        parentEl.classList.toggle("done")
+        parentEl.classList.toggle("done");
+
+        
+
+
+
     }
 
     if(targetEl.classList.contains("remove-todo")) {
