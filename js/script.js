@@ -20,15 +20,18 @@ const iniciaComTarefas = () => {
     if(tarefasRecuperadas != null) {
         let i
         for(i = 0; i < tarefasRecuperadas.length; i++) {
-            saveTodo(tarefasRecuperadas[i])
+            saveTodo(tarefasRecuperadas[i].titulo,  tarefasRecuperadas[i].sit);
 
+            console.log(tarefasRecuperadas[i].sit)
         }
     }
 }
 
-const saveTodo = (text) => {
+const saveTodo = (text, sit) => {
     const todo = document.createElement("div");
-    todo.classList.add("todo");
+
+    todo.classList.add(sit)
+    todo.classList.add('todo')
 
     const todoTitle = document.createElement("h3");
     todoTitle.innerText = text;
@@ -82,11 +85,11 @@ const updateTodo = (text) => {
 const saveLocalStorage = (e) => {
     let arrayTarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
 
-    arrayTarefas.push(e);
+    arrayTarefas.push({id:arrayTarefas.length, titulo: e});
 
-    localStorage.setItem('tarefas', JSON.stringify(arrayTarefas))
+    localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
 
-    location.reload()
+    location.reload();
 }
 
 
@@ -101,7 +104,9 @@ todoForm.addEventListener('submit', (e) => {
     if(inputValue) {
         saveTodo(inputValue)
         saveLocalStorage(inputValue.trim())
+        location.reload()
     }
+    location.reload()
 })
 
 
@@ -118,10 +123,28 @@ document.addEventListener('click', (e) => {
     if(targetEl.classList.contains("finish-todo")) {
         parentEl.classList.toggle("done");
 
+        let i;
+
+
+        for(i = 0; i < tarefasRecuperadas.length; i++) {
+
+            if(tarefasRecuperadas[i].titulo === todoTitle) {
+                
+                if(tarefasRecuperadas[i].sit === "done") {
+
+                    delete tarefasRecuperadas[i].sit;
+
+                    localStorage.setItem('tarefas', JSON.stringify(tarefasRecuperadas));
+
+                } else {
+
+                    tarefasRecuperadas[i].sit = 'done'
         
+                    localStorage.setItem('tarefas', JSON.stringify(tarefasRecuperadas));
 
-
-
+                }
+            }
+        }
     }
 
     if(targetEl.classList.contains("remove-todo")) {
@@ -129,17 +152,17 @@ document.addEventListener('click', (e) => {
 
         let i;
         for(i = 0; i < tarefasRecuperadas.length; i++) {
-            if(tarefasRecuperadas[i] === todoTitle) {
+            if(tarefasRecuperadas[i].titulo === todoTitle) {
 
                /*  let newList = tarefasRecuperadas.filter(item => item !== tarefasRecuperadas[i])
                 localStorage.setItem('tarefas', JSON.stringify(newList))
                 tarefasRecuperadas = newList */
 
-                let index = tarefasRecuperadas.indexOf(tarefasRecuperadas[i]);
+               /*  let index = tarefasRecuperadas.indexOf(tarefasRecuperadas[i]);
                 
-                console.log(index)
+                console.log(index) */
 
-                    tarefasRecuperadas.splice(index, 1)
+                    tarefasRecuperadas.splice(i, 1)
                     
                     localStorage.setItem('tarefas', JSON.stringify(tarefasRecuperadas));
 
@@ -153,6 +176,7 @@ document.addEventListener('click', (e) => {
         toggleForms();
         editInput.value = todoTitle;
         oldInputValue = todoTitle;
+
     }
 })
 
@@ -168,8 +192,19 @@ editForm.addEventListener('submit', (e) => {
     const editInputValue = editInput.value;
 
     if(editInputValue) {
-        updateTodo(editInputValue)
-    }
+        updateTodo(editInputValue);
 
+        let i;
+
+        for(i = 0; i < tarefasRecuperadas.length; i++) {
+
+            if(tarefasRecuperadas[i].titulo === oldInputValue) {
+
+                tarefasRecuperadas[i].titulo = editInputValue
+    
+                localStorage.setItem('tarefas', JSON.stringify(tarefasRecuperadas));
+            }
+        }
+    }
     toggleForms()
 })
