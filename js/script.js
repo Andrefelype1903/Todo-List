@@ -7,6 +7,10 @@ const editForm = document.querySelector('#edit-form');
 const editInput = document.querySelector('#edit-input');
 const cancelEditBtn = document.querySelector('#cancel-edit-btn');
 
+const todo = document.querySelector('.todo')
+
+const filtro = document.querySelector('#filter-select')
+
 let oldInputValue;
 
 
@@ -16,22 +20,68 @@ console.log(tarefasRecuperadas)
 
 /* Funções */
 
-const iniciaComTarefas = () => {
-    if(tarefasRecuperadas != null) {
+filtro.addEventListener('change' , () => {
+
+    if(filtro.value === 'all') {
+
+        todoList.innerText = ''
+
         let i
         for(i = 0; i < tarefasRecuperadas.length; i++) {
-            saveTodo(tarefasRecuperadas[i].titulo,  tarefasRecuperadas[i].sit);
-
-            console.log(tarefasRecuperadas[i].sit)
+            saveTodo(tarefasRecuperadas[i].titulo, tarefasRecuperadas[i].sit, 'todo');
         }
     }
+
+    if(filtro.value === 'done') {
+
+        todoList.innerText = ''
+
+        const tarefasFeitas = tarefasRecuperadas.filter(item => item.sit === 'done');
+
+        let i
+        for(i = 0; i < tarefasFeitas.length; i++) {
+            saveTodo(tarefasFeitas[i].titulo, tarefasFeitas[i].sit, 'todo');
+        }
+    }
+
+    if(filtro.value === 'todo') {
+        todoList.innerText = '';
+        const tarefasAFazer = tarefasRecuperadas.filter(item => !item.sit)
+
+        let i
+        for(i = 0; i < tarefasAFazer.length; i++) {
+            saveTodo(tarefasAFazer[i].titulo, tarefasAFazer[i].sit, 'todo');
+        }
+    }
+
+} )
+
+/* Continuar filtro  */
+
+
+const iniciaComTarefas = () => {
+
+    
+    if(tarefasRecuperadas != null) {
+
+        
+        let i
+        for(i = 0; i < tarefasRecuperadas.length; i++) {
+            saveTodo(tarefasRecuperadas[i].titulo,  tarefasRecuperadas[i].sit, 'todo');
+
+        }
+
+    }
+
+
 }
 
-const saveTodo = (text, sit) => {
+const saveTodo = (text, sit, display) => {
     const todo = document.createElement("div");
 
     todo.classList.add(sit)
-    todo.classList.add('todo')
+    todo.classList.add(display)
+
 
     const todoTitle = document.createElement("h3");
     todoTitle.innerText = text;
@@ -58,7 +108,11 @@ const saveTodo = (text, sit) => {
 
 }
 
-iniciaComTarefas()
+if(filtro.value === 'all') {
+
+    iniciaComTarefas()
+}
+
 
 const toggleForms = () => {
     editForm.classList.toggle('hide');
