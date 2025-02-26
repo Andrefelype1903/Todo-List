@@ -162,6 +162,24 @@ input, select {
     font-style: italic;
 }
 
+footer {
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+    align-items: center;
+}
+
+footer p {
+    color: #000;
+    font-size: 15px;
+    margin: 5px;
+}
+
+footer img {
+    width: 30px;
+    margin: 0 5px;
+}
+
 @media (width <= 470px) {
 
     .todo-container {

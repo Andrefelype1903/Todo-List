@@ -7,9 +7,9 @@ const editForm = document.querySelector('#edit-form');
 const editInput = document.querySelector('#edit-input');
 const cancelEditBtn = document.querySelector('#cancel-edit-btn');
 
-const todo = document.querySelector('.todo')
+const filtro = document.querySelector('#filter-select');
 
-const filtro = document.querySelector('#filter-select')
+const search = document.querySelector('#search-input')
 
 let oldInputValue;
 
@@ -19,6 +19,27 @@ console.log(tarefasRecuperadas)
 
 
 /* Funções */
+
+search.addEventListener('input', () => {
+    buscarTarefas(search.value.toLowerCase())
+    search.focus()
+})
+
+
+const buscarTarefas = (termo) => {
+    todoList.innerText = '';
+
+    let tarefasFiltradas = tarefasRecuperadas.filter(tarefa => tarefa.titulo.toLowerCase().includes(termo));
+
+    tarefasFiltradas.forEach(tarefa => {
+        saveTodo(tarefa.titulo, tarefa.sit, 'todo')
+    })
+
+}
+
+
+
+
 
 filtro.addEventListener('change' , () => {
 
