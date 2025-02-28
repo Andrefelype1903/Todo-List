@@ -12,6 +12,8 @@ const filterDone = document.querySelector('#filter-done');
 const filterTodo = document.querySelector('#filter-todo');
 
 
+const titleModo = document.querySelector('.title-todo-modo');
+const placeHolderInput = document.querySelector('#todo-input')
 
 const selectModo = document.querySelector('#control')
 
@@ -32,9 +34,28 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log(modoAtual)
 
     if(modoAtual === 'bags-control') {
+
         tituloControle.innerText = 'Controle de sacola';
+        titleModo.innerText = 'Adicione a venda';
+        placeHolderInput.placeholder = "Quem pegou?";
+
     } else if(modoAtual === 'todo-list') {
+
         tituloControle.innerText = "Lista de tarefas";
+        titleModo.innerText = 'Adicione sua tarefa';
+        placeHolderInput.placeholder = "O que você vai fazer?";
+
+    } else if(modoAtual === 'market-list') {
+
+        tituloControle.innerText = "Lista de compras";
+        titleModo.innerText = 'Adicione o item';
+        placeHolderInput.placeholder = "O que você vai comprar?";
+
+    } else if(modoAtual === 'grilo-list') {
+
+        tituloControle.innerText = "Tarefas Grilo";titleModo.innerText = 'Adicione sua tarefa';
+        placeHolderInput.placeholder = "O que você vai fazer?";
+
     }
 
     selectModo.value = modoAtual
@@ -73,6 +94,8 @@ selectModo.addEventListener('change', () => {
 
     if(selectModo.value === 'bags-control') {
         tituloControle.innerText = 'Controle de sacola';
+        titleModo.innerText = 'Adicione a venda';
+        placeHolderInput.placeholder = "Quem pegou?"
         filterDone.innerText = 'Pagos';
         filterTodo.innerText = 'A Pagar';
         chave = 'sacola';
@@ -91,6 +114,8 @@ selectModo.addEventListener('change', () => {
 
     } else if(selectModo.value === 'todo-list') {
         tituloControle.innerText = "Lista de tarefas";
+        titleModo.innerText = 'Adicione sua tarefa';
+        placeHolderInput.placeholder = "O que você vai fazer?";
         filterDone.innerText = 'Feitos';
         filterTodo.innerText = 'A fazer';
         chave = 'tarefas';
@@ -98,6 +123,44 @@ selectModo.addEventListener('change', () => {
         localStorage.setItem('ultimaOpcao', selectModo.value)
 
         localStorage.setItem('chaveAtual', 'tarefas')
+
+        tarefasRecuperadas = JSON.parse(localStorage.getItem(chave))
+
+        let i
+        for(i = 0; i < tarefasRecuperadas.length; i++) {
+            saveTodo(tarefasRecuperadas[i].titulo, tarefasRecuperadas[i].sit, 'todo');
+        }
+
+    } else if(selectModo.value === 'market-list') {
+        tituloControle.innerText = "Lista de compras";
+        titleModo.innerText = 'Adicione o item';
+        placeHolderInput.placeholder = "O que você vai comprar?";
+        filterDone.innerText = 'comprados';
+        filterTodo.innerText = 'A comprar';
+        chave = 'compras';
+
+        localStorage.setItem('ultimaOpcao', selectModo.value)
+
+        localStorage.setItem('chaveAtual', 'compras')
+
+        tarefasRecuperadas = JSON.parse(localStorage.getItem(chave))
+
+        let i
+        for(i = 0; i < tarefasRecuperadas.length; i++) {
+            saveTodo(tarefasRecuperadas[i].titulo, tarefasRecuperadas[i].sit, 'todo');
+        }
+
+    } else if(selectModo.value === 'grilo-list') {
+        tituloControle.innerText = "Tarefas Grilo";
+        titleModo.innerText = 'Adicione sua tarefa';
+        placeHolderInput.placeholder = "O que você vai fazer?";
+        filterDone.innerText = 'Feitos';
+        filterTodo.innerText = 'A fazer';
+        chave = 'grilo';
+
+        localStorage.setItem('ultimaOpcao', selectModo.value)
+
+        localStorage.setItem('chaveAtual', 'grilo')
 
         tarefasRecuperadas = JSON.parse(localStorage.getItem(chave))
 

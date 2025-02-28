@@ -1,6 +1,6 @@
 {
     "name": "Lista de tarefas",
-    "short_name": "To do list",
+    "short_name": "Lista de Tarefas",
     "icons": [
         {
             "src": "../img/todo-list.png",
