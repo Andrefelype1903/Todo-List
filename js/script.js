@@ -38,6 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
         tituloControle.innerText = 'Controle de sacola';
         titleModo.innerText = 'Adicione a venda';
         placeHolderInput.placeholder = "Quem pegou?";
+        filterDone.innerText = 'Pagos';
+        filterTodo.innerText = 'A Pagar';
 
     } else if(modoAtual === 'todo-list') {
 
@@ -50,6 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
         tituloControle.innerText = "Lista de compras";
         titleModo.innerText = 'Adicione o item';
         placeHolderInput.placeholder = "O que você vai comprar?";
+        filterDone.innerText = 'comprados';
+        filterTodo.innerText = 'A comprar';
 
     } else if(modoAtual === 'grilo-list') {
 
