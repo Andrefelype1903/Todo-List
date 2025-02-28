@@ -9,12 +9,38 @@ const cancelEditBtn = document.querySelector('#cancel-edit-btn');
 
 const filtro = document.querySelector('#filter-select');
 
-const search = document.querySelector('#search-input')
+const selectModo = document.querySelector('#control')
+
+const search = document.querySelector('#search-input');
+
+const tituloControle = document.querySelector('.title-todo');
 
 let oldInputValue;
 
+let chave = localStorage.getItem('chaveAtual');
 
-let tarefasRecuperadas = JSON.parse(localStorage.getItem('tarefas'))
+document.addEventListener('DOMContentLoaded', () => {
+
+
+    const valorPadrao = 'todo-list'
+
+    const modoAtual = localStorage.getItem('ultimaOpcao') || valorPadrao
+    console.log(modoAtual)
+
+    if(modoAtual === 'bags-control') {
+        tituloControle.innerText = 'Controle de sacola';
+    } else if(modoAtual === 'todo-list') {
+        tituloControle.innerText = "Lista de tarefas";
+    }
+
+    selectModo.value = modoAtual
+   
+
+})
+
+
+let tarefasRecuperadas = JSON.parse(localStorage.getItem(chave))
+
 console.log(tarefasRecuperadas)
 
 
@@ -37,8 +63,44 @@ const buscarTarefas = (termo) => {
 
 }
 
+selectModo.addEventListener('change', () => {
+
+    todoList.innerHTML = '';
+
+    if(selectModo.value === 'bags-control') {
+        tituloControle.innerText = 'Controle de sacola';
+        chave = 'sacola';
+
+        localStorage.setItem('ultimaOpcao', selectModo.value)
+
+        localStorage.setItem('chaveAtual', 'sacola')
+
+        tarefasRecuperadas = JSON.parse(localStorage.getItem(chave))
+
+        let i
+        for(i = 0; i < tarefasRecuperadas.length; i++) {
+            saveTodo(tarefasRecuperadas[i].titulo, tarefasRecuperadas[i].sit, 'todo');
+        }
 
 
+    } else if(selectModo.value === 'todo-list') {
+        tituloControle.innerText = "Lista de tarefas";
+        chave = 'tarefas';
+
+        localStorage.setItem('ultimaOpcao', selectModo.value)
+
+        localStorage.setItem('chaveAtual', 'tarefas')
+
+        tarefasRecuperadas = JSON.parse(localStorage.getItem(chave))
+
+        let i
+        for(i = 0; i < tarefasRecuperadas.length; i++) {
+            saveTodo(tarefasRecuperadas[i].titulo, tarefasRecuperadas[i].sit, 'todo');
+        }
+
+    }
+
+})
 
 
 filtro.addEventListener('change' , () => {
@@ -158,11 +220,11 @@ const updateTodo = (text) => {
 
 
 const saveLocalStorage = (e) => {
-    let arrayTarefas = JSON.parse(localStorage.getItem('tarefas')) || [];
+    let arrayTarefas = JSON.parse(localStorage.getItem(chave)) || [];
 
     arrayTarefas.push({id:arrayTarefas.length, titulo: e});
 
-    localStorage.setItem('tarefas', JSON.stringify(arrayTarefas));
+    localStorage.setItem(chave, JSON.stringify(arrayTarefas));
 
     location.reload();
 }
@@ -209,13 +271,13 @@ document.addEventListener('click', (e) => {
 
                     delete tarefasRecuperadas[i].sit;
 
-                    localStorage.setItem('tarefas', JSON.stringify(tarefasRecuperadas));
+                    localStorage.setItem(chave, JSON.stringify(tarefasRecuperadas));
 
                 } else {
 
                     tarefasRecuperadas[i].sit = 'done'
         
-                    localStorage.setItem('tarefas', JSON.stringify(tarefasRecuperadas));
+                    localStorage.setItem(chave, JSON.stringify(tarefasRecuperadas));
 
                 }
             }
@@ -239,7 +301,7 @@ document.addEventListener('click', (e) => {
 
                     tarefasRecuperadas.splice(i, 1)
                     
-                    localStorage.setItem('tarefas', JSON.stringify(tarefasRecuperadas));
+                    localStorage.setItem(chave, JSON.stringify(tarefasRecuperadas));
 
                     Location.reload()
             
@@ -277,7 +339,7 @@ editForm.addEventListener('submit', (e) => {
 
                 tarefasRecuperadas[i].titulo = editInputValue
     
-                localStorage.setItem('tarefas', JSON.stringify(tarefasRecuperadas));
+                localStorage.setItem(chave, JSON.stringify(tarefasRecuperadas));
             }
         }
     }

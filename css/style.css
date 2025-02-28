@@ -12,6 +12,18 @@ body {
     background-color: #102f5e;
 }
 
+.select-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px;
+}
+
+
+.select-control h4 {
+    margin: 8px;
+}
+
 button {
     background-color: #fdfdfd;
     color: #102f5e;

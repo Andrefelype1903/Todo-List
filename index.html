@@ -18,7 +18,14 @@
 <body>
     <div class="todo-container">
         <header>
-            <h1>Lista de tarefas</h1>
+            <div class="select-control">
+                <h4 class="title-modo">Escolha o modo:</h4>
+                <select name="" id="control">
+                    <option value="todo-list">Lista de tarefas</option>
+                    <option value="bags-control">Controle de sacola</option>
+                </select>
+            </div>
+            <h1 class="title-todo">Lista de tarefas</h1>
         </header>
         <form class="" id="todo-form">
             <p>Adicione sua tarefa</p>
@@ -28,6 +35,7 @@
                     <i class="fa-regular fa-plus"></i>
                 </button>
             </div>
+            
         </form>
         <form id="edit-form" class="hide">
             <p>Edite a sua tarefa</p>
