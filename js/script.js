@@ -8,6 +8,10 @@ const editInput = document.querySelector('#edit-input');
 const cancelEditBtn = document.querySelector('#cancel-edit-btn');
 
 const filtro = document.querySelector('#filter-select');
+const filterDone = document.querySelector('#filter-done');
+const filterTodo = document.querySelector('#filter-todo');
+
+
 
 const selectModo = document.querySelector('#control')
 
@@ -69,6 +73,8 @@ selectModo.addEventListener('change', () => {
 
     if(selectModo.value === 'bags-control') {
         tituloControle.innerText = 'Controle de sacola';
+        filterDone.innerText = 'Pagos';
+        filterTodo.innerText = 'A Pagar';
         chave = 'sacola';
 
         localStorage.setItem('ultimaOpcao', selectModo.value)
@@ -85,6 +91,8 @@ selectModo.addEventListener('change', () => {
 
     } else if(selectModo.value === 'todo-list') {
         tituloControle.innerText = "Lista de tarefas";
+        filterDone.innerText = 'Feitos';
+        filterTodo.innerText = 'A fazer';
         chave = 'tarefas';
 
         localStorage.setItem('ultimaOpcao', selectModo.value)
