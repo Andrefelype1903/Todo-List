@@ -9,8 +9,8 @@ const cancelEditBtn = document.querySelector('#cancel-edit-btn');
 
 const filtro = document.querySelector('#filter-select');
 const filterDone = document.querySelector('#filter-done');
-const filterTodo = document.querySelector('#filter-todo');
-
+const filterTodo = document.querySelector
+('#filter-todo');
 
 const titleModo = document.querySelector('.title-todo-modo');
 const placeHolderInput = document.querySelector('#todo-input')
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modoAtual = localStorage.getItem('ultimaOpcao') || valorPadrao
     console.log(modoAtual)
 
-    if(modoAtual === 'bags-control') {
+    if(modoAtual === 'bags-control' || modoAtual === 'bags-control-walter' || modoAtual === 'bags-control-ninim' ) {
 
         tituloControle.innerText = 'Controle de sacola';
         titleModo.innerText = 'Adicione a venda';
@@ -173,6 +173,42 @@ selectModo.addEventListener('change', () => {
             saveTodo(tarefasRecuperadas[i].titulo, tarefasRecuperadas[i].sit, 'todo');
         }
 
+    } else if(selectModo.value === 'bags-control-walter') {
+        tituloControle.innerText = 'Sacola Walter';
+        titleModo.innerText = 'Adicione a venda';
+        placeHolderInput.placeholder = "Quem pegou?"
+        filterDone.innerText = 'Pagos';
+        filterTodo.innerText = 'A Pagar';
+        chave = 'walter';
+
+        localStorage.setItem('ultimaOpcao', selectModo.value)
+
+        localStorage.setItem('chaveAtual', 'walter')
+
+        tarefasRecuperadas = JSON.parse(localStorage.getItem(chave))
+
+        let i
+        for(i = 0; i < tarefasRecuperadas.length; i++) {
+            saveTodo(tarefasRecuperadas[i].titulo, tarefasRecuperadas[i].sit, 'todo');
+        }
+    } else if(selectModo.value === 'bags-control-ninim') {
+        tituloControle.innerText = 'Sacola Ninim';
+        titleModo.innerText = 'Adicione a venda';
+        placeHolderInput.placeholder = "Quem pegou?"
+        filterDone.innerText = 'Pagos';
+        filterTodo.innerText = 'A Pagar';
+        chave = 'ninim';
+
+        localStorage.setItem('ultimaOpcao', selectModo.value)
+
+        localStorage.setItem('chaveAtual', 'ninim')
+
+        tarefasRecuperadas = JSON.parse(localStorage.getItem(chave))
+
+        let i
+        for(i = 0; i < tarefasRecuperadas.length; i++) {
+            saveTodo(tarefasRecuperadas[i].titulo, tarefasRecuperadas[i].sit, 'todo');
+        }
     }
 
 })
