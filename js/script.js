@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const modoAtual = localStorage.getItem('ultimaOpcao') || valorPadrao
     console.log(modoAtual)
 
-    if(modoAtual === 'bags-control' || modoAtual === 'bags-control-walter' || modoAtual === 'bags-control-ninim' ) {
+    if(modoAtual === 'bags-control') {
 
         tituloControle.innerText = 'Controle de sacola';
         titleModo.innerText = 'Adicione a venda';
@@ -59,6 +59,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
         tituloControle.innerText = "Tarefas Grilo";titleModo.innerText = 'Adicione sua tarefa';
         placeHolderInput.placeholder = "O que você vai fazer?";
+
+    } else if(modoAtual === 'bags-control-walter') {
+
+        tituloControle.innerText = 'Sacolas Walter';
+        titleModo.innerText = 'Adicione a venda';
+        placeHolderInput.placeholder = "Quem pegou?"
+        filterDone.innerText = 'Pagos';
+        filterTodo.innerText = 'A Pagar';
+
+    } else if(modoAtual === 'bags-control-ninim') {
+
+        tituloControle.innerText = 'Sacolas Ninin';
+        titleModo.innerText = 'Adicione a venda';
+        placeHolderInput.placeholder = "Quem pegou?"
+        filterDone.innerText = 'Pagos';
+        filterTodo.innerText = 'A Pagar';
 
     }
 
@@ -174,7 +190,7 @@ selectModo.addEventListener('change', () => {
         }
 
     } else if(selectModo.value === 'bags-control-walter') {
-        tituloControle.innerText = 'Sacola Walter';
+        tituloControle.innerText = 'Sacolas Walter';
         titleModo.innerText = 'Adicione a venda';
         placeHolderInput.placeholder = "Quem pegou?"
         filterDone.innerText = 'Pagos';
@@ -192,7 +208,7 @@ selectModo.addEventListener('change', () => {
             saveTodo(tarefasRecuperadas[i].titulo, tarefasRecuperadas[i].sit, 'todo');
         }
     } else if(selectModo.value === 'bags-control-ninim') {
-        tituloControle.innerText = 'Sacola Ninim';
+        tituloControle.innerText = 'Sacolas Ninim';
         titleModo.innerText = 'Adicione a venda';
         placeHolderInput.placeholder = "Quem pegou?"
         filterDone.innerText = 'Pagos';
