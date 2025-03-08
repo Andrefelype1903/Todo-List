@@ -143,7 +143,7 @@ input, select {
     flex: 1;
 }
 
-/* todo lista */
+/* todo list */
 
 
 .todo {
@@ -172,6 +172,23 @@ input, select {
     color: #fff;
     text-decoration: line-through;
     font-style: italic;
+}
+
+.confirm-exclusao {
+    width: 70%;
+    height: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 3% 0;
+    background-color: red;
+    position: absolute;
+    border-radius: 5px;
+
+}
+
+.btn{
+    font-size: 0.7rem;
 }
 
 footer {

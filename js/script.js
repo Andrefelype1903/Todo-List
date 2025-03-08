@@ -412,29 +412,62 @@ document.addEventListener('click', (e) => {
     }
 
     if(targetEl.classList.contains("remove-todo")) {
-        parentEl.remove();
 
-        let i;
-        for(i = 0; i < tarefasRecuperadas.length; i++) {
-            if(tarefasRecuperadas[i].titulo === todoTitle) {
+        const confirm = document.createElement('div');
+        confirm.classList.add('confirm-exclusao');
+        parentEl.appendChild(confirm);
 
-               /*  let newList = tarefasRecuperadas.filter(item => item !== tarefasRecuperadas[i])
-                localStorage.setItem('tarefas', JSON.stringify(newList))
-                tarefasRecuperadas = newList */
+        const titleBtn = document.createElement('h3')
+        confirm.appendChild(titleBtn)
+        titleBtn.textContent = 'Tem certeza?'
 
-               /*  let index = tarefasRecuperadas.indexOf(tarefasRecuperadas[i]);
-                
-                console.log(index) */
+        const btnSim = document.createElement('button')
+        const btnNão = document.createElement('button')
 
-                    tarefasRecuperadas.splice(i, 1)
+        btnSim.classList.add('btn');
+        btnNão.classList.add('btn');
+
+        btnSim.textContent = 'Sim';
+        btnNão.textContent = 'Não';
+
+
+        confirm.appendChild(btnSim)
+        confirm.appendChild(btnNão)
+
+        btnSim.addEventListener('click', () => {
+
+            parentEl.remove();
+    
+            let i;
+            for(i = 0; i < tarefasRecuperadas.length; i++) {
+                if(tarefasRecuperadas[i].titulo === todoTitle) {
+    
+                   /*  let newList = tarefasRecuperadas.filter(item => item !== tarefasRecuperadas[i])
+                    localStorage.setItem('tarefas', JSON.stringify(newList))
+                    tarefasRecuperadas = newList */
+    
+                   /*  let index = tarefasRecuperadas.indexOf(tarefasRecuperadas[i]);
                     
-                    localStorage.setItem(chave, JSON.stringify(tarefasRecuperadas));
-
-                    Location.reload()
-            
+                    console.log(index) */
+    
+                        tarefasRecuperadas.splice(i, 1)
+                        
+                        localStorage.setItem(chave, JSON.stringify(tarefasRecuperadas));
+    
+                        Location.reload()
+                
+                }
             }
-        }
+            
+        })
+
+        btnNão.addEventListener('click', () => {
+            confirm.remove()
+        })
     }
+
+
+
 
     if(targetEl.classList.contains("edit-todo")) {
         toggleForms();
