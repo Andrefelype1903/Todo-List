@@ -107,7 +107,7 @@ const buscarTarefas = (termo) => {
     let tarefasFiltradas = tarefasRecuperadas.filter(tarefa => tarefa.titulo.toLowerCase().includes(termo));
 
     tarefasFiltradas.forEach(tarefa => {
-        saveTodo(tarefa.titulo, tarefa.sit, 'todo')
+        saveTodo(tarefa.titulo, tarefa.id, tarefa.sit, 'todo')
     })
 
 }
@@ -244,7 +244,7 @@ filtro.addEventListener('change' , () => {
 
         let i
         for(i = 0; i < tarefasRecuperadas.length; i++) {
-            saveTodo(tarefasRecuperadas[i].titulo, tarefasRecuperadas[i].sit, 'todo');
+            saveTodo(tarefasRecuperadas[i].titulo, tarefasRecuperadas[i].id, tarefasRecuperadas[i].sit, 'todo');
         }
     }
 
@@ -256,7 +256,7 @@ filtro.addEventListener('change' , () => {
 
         let i
         for(i = 0; i < tarefasFeitas.length; i++) {
-            saveTodo(tarefasFeitas[i].titulo, tarefasFeitas[i].sit, 'todo');
+            saveTodo(tarefasFeitas[i].titulo, tarefasFeitas[i].id, tarefasFeitas[i].sit, 'todo');
         }
     }
 
@@ -266,7 +266,7 @@ filtro.addEventListener('change' , () => {
 
         let i
         for(i = 0; i < tarefasAFazer.length; i++) {
-            saveTodo(tarefasAFazer[i].titulo, tarefasAFazer[i].sit, 'todo');
+            saveTodo(tarefasAFazer[i].titulo, tarefasAFazer[i].id, tarefasAFazer[i].sit, 'todo');
         }
     }
 
