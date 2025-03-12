@@ -22,8 +22,11 @@ const search = document.querySelector('#search-input');
 const tituloControle = document.querySelector('.title-todo');
 
 let oldInputValue;
+let oldInputValueId;
 
-let chave = localStorage.getItem('chaveAtual');
+let chave = localStorage.getItem('chaveAtual') || 'tarefas' ;
+
+let idTarefa = parseInt(localStorage.getItem('idAtual')) || 0
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -70,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     } else if(modoAtual === 'bags-control-ninim') {
 
-        tituloControle.innerText = 'Sacolas Ninin';
+        tituloControle.innerText = 'Sacolas Ninim';
         titleModo.innerText = 'Adicione a venda';
         placeHolderInput.placeholder = "Quem pegou?"
         filterDone.innerText = 'Pagos';
@@ -87,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
 let tarefasRecuperadas = JSON.parse(localStorage.getItem(chave))
 
 console.log(tarefasRecuperadas)
+
 
 
 /* Funções */
@@ -227,6 +231,8 @@ selectModo.addEventListener('change', () => {
         }
     }
 
+    location.reload()
+
 })
 
 
@@ -266,9 +272,6 @@ filtro.addEventListener('change' , () => {
 
 } )
 
-/* Continuar filtro  */
-
-
 const iniciaComTarefas = () => {
 
     
@@ -277,25 +280,25 @@ const iniciaComTarefas = () => {
         
         let i
         for(i = 0; i < tarefasRecuperadas.length; i++) {
-            saveTodo(tarefasRecuperadas[i].titulo,  tarefasRecuperadas[i].sit, 'todo');
+            saveTodo(tarefasRecuperadas[i].titulo, tarefasRecuperadas[i].id,  tarefasRecuperadas[i].sit, 'todo');
 
         }
-
     }
-
-
 }
 
-const saveTodo = (text, sit, display) => {
+const saveTodo = (text, id, sit, display) => {
     const todo = document.createElement("div");
 
     todo.classList.add(sit)
     todo.classList.add(display)
 
-
     const todoTitle = document.createElement("h3");
     todoTitle.innerText = text;
     todo.appendChild(todoTitle);
+
+    const idTodo = document.createElement("h5");
+    idTodo.innerText = id;
+    todo.appendChild(idTodo)
 
     const doneBtn = document.createElement("button");
     doneBtn.classList.add("finish-todo");
@@ -347,12 +350,18 @@ const updateTodo = (text) => {
 
 
 const saveLocalStorage = (e) => {
+
     let arrayTarefas = JSON.parse(localStorage.getItem(chave)) || [];
 
-    arrayTarefas.push({id:arrayTarefas.length, titulo: e});
+    idTarefa++;
+
+    arrayTarefas.push({id:idTarefa, titulo: e});
+
+    localStorage.setItem('idAtual', idTarefa)
+    
 
     localStorage.setItem(chave, JSON.stringify(arrayTarefas));
-
+    
     location.reload();
 }
 
@@ -368,7 +377,6 @@ todoForm.addEventListener('submit', (e) => {
     if(inputValue) {
         saveTodo(inputValue)
         saveLocalStorage(inputValue.trim())
-        location.reload()
     }
     location.reload()
 })
@@ -378,9 +386,12 @@ document.addEventListener('click', (e) => {
     const targetEl = e.target;
     const parentEl = targetEl.closest("div");
     let todoTitle;
+    let idTitle;
+    
 
     if(parentEl && parentEl.querySelector("h3")) {
         todoTitle = parentEl.querySelector("h3").innerText;
+        idTitle = parentEl.querySelector("h5").innerText;
     }
 
 
@@ -392,7 +403,11 @@ document.addEventListener('click', (e) => {
 
         for(i = 0; i < tarefasRecuperadas.length; i++) {
 
-            if(tarefasRecuperadas[i].titulo === todoTitle) {
+            const idTarefaRecuperada = tarefasRecuperadas[i].id
+        
+
+            if(idTarefaRecuperada === Number(idTitle)) {
+
                 
                 if(tarefasRecuperadas[i].sit === "done") {
 
@@ -440,7 +455,10 @@ document.addEventListener('click', (e) => {
     
             let i;
             for(i = 0; i < tarefasRecuperadas.length; i++) {
-                if(tarefasRecuperadas[i].titulo === todoTitle) {
+
+                const idTarefaRecuperada = tarefasRecuperadas[i].id
+
+                if(idTarefaRecuperada === Number(idTitle)) {
     
                    /*  let newList = tarefasRecuperadas.filter(item => item !== tarefasRecuperadas[i])
                     localStorage.setItem('tarefas', JSON.stringify(newList))
@@ -467,13 +485,11 @@ document.addEventListener('click', (e) => {
     }
 
 
-
-
     if(targetEl.classList.contains("edit-todo")) {
         toggleForms();
         editInput.value = todoTitle;
         oldInputValue = todoTitle;
-
+        oldInputValueId = idTitle
     }
 })
 
@@ -495,7 +511,9 @@ editForm.addEventListener('submit', (e) => {
 
         for(i = 0; i < tarefasRecuperadas.length; i++) {
 
-            if(tarefasRecuperadas[i].titulo === oldInputValue) {
+            if(tarefasRecuperadas[i].id === Number(oldInputValueId)) {
+
+                console.log('certo')
 
                 tarefasRecuperadas[i].titulo = editInputValue
     
